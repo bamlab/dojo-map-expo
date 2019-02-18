@@ -1,0 +1,20 @@
+{
+  "ChooseAddress": {
+    "no_search_text": "Où voulez-vous laisser une anecdote ?",
+    "no_result_found": "Aucun résultat trouvé",
+    "error": "Une erreur est survenue",
+    "AddressInput": {
+      "placeholder": "Entrez une adresse"
+    }
+  },
+  "WriteStory": {
+    "write_story": "Ecrivez votre anecdote ici !",
+    "Nickname": {
+      "placeholder": "Votre surnom"
+    }
+  },
+  "Home": {
+    "ok": "OK",
+    "activate_geoloc_in_settings": "Cette fonctionnalité n'est disponible qu'en activant la géolocalisation dans les préférences de l'appareil."
+  }
+}

@@ -1,21 +1,38 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// @flow
 
-export default class App extends React.Component {
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
+
+import React, { Component } from 'react';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import RootNavigation from './src/navigation/index';
+import theme from './src/theme/index';
+
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+      <PaperProvider theme={paperTheme}>
+        <RootNavigation />
+      </PaperProvider>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const paperTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: theme.colors.text,
   },
-});
+  fonts: {
+    regular: 'NunitoSans-Regular',
+    light: 'NunitoSans-Regular',
+    thin: 'NunitoSans-Regular',
+    medium: 'NunitoSans-SemiBold',
+  },
+};
