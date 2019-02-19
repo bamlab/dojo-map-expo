@@ -64,8 +64,8 @@ class Home extends PureComponent<PropsType, StateType> {
     });
   };
 
-  _goToUserLocation = (isFromUserInteraction?: boolean): Promise<void> =>
-    checkPermissionAndGetCurrentLocation(isFromUserInteraction)
+  _goToUserLocation = (): Promise<void> =>
+    checkPermissionAndGetCurrentLocation()
       .then(position => positionToRegion(position))
       .catch(e => {
         console.warn(e);

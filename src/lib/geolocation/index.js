@@ -1,14 +1,11 @@
 // @flow
 
-import { Platform } from 'react-native';
-import { Permissions } from 'expo';
-import Geolocation from 'react-native-geolocation-service';
-import LocationServicesDialogBox from 'react-native-android-location-services-dialog-box';
+import { Permissions, Location } from 'expo';
 
 export { findAddressesFromSearch } from './geocoder';
 export { positionToRegion } from './positionToRegion';
 
-const checkLocationPermissionAndAskIfPossible = (isFromUserInteraction?: boolean) => {
+const checkLocationPermissionAndAskIfPossible = () => {
   return getLocationPermissionStatus().then(({status}) => {
     switch (status) {
       case 'granted':
@@ -21,43 +18,29 @@ const checkLocationPermissionAndAskIfPossible = (isFromUserInteraction?: boolean
   });
 };
 
-const askForLocationPermissionAgain = () => {
-  if (Platform.OS === 'android') {
-    return askForLocationPermission();
-  }
-  return false;
-};
-
 const askForLocationPermission = () => {
   return Permissions.getAsync(Permissions.LOCATION).then(({ status }) => status === 'granted');
 };
 
 export const getLocationPermissionStatus = () => Permissions.askAsync(Permissions.LOCATION);
 
-const checkLocationIsAllowed = (isFromUserInteraction?: boolean) => {
-  return checkLocationPermissionAndAskIfPossible(isFromUserInteraction).then(allowed => {
-    return allowed ? checkLocationServicesEnabled() : Promise.reject(); // eslint-disable-line prefer-promise-reject-errors
+const checkLocationIsAllowed = () => {
+  return checkLocationPermissionAndAskIfPossible().then(allowed => {
+    return allowed ? Location.hasServicesEnabledAsync().then(enabled => enabled ? Promise.resolve() : Promise.reject()) : Promise.reject(); // eslint-disable-line prefer-promise-reject-errors
   });
 };
 
-const checkLocationServicesEnabled = () => {
-  if (Platform.OS !== 'android') {
-    return;
-  }
-  return LocationServicesDialogBox.checkLocationServicesIsEnabled({ showDialog: false, enableHighAccuracy: false });
-};
-
-export const checkPermissionAndGetCurrentLocation = (isFromUserInteraction?: boolean) => {
-  return checkLocationIsAllowed(isFromUserInteraction).then(() => getUserLocation());
+export const checkPermissionAndGetCurrentLocation = () => {
+  return checkLocationIsAllowed().then(() => getUserLocation());
 };
 
 export const getUserLocation = () =>
   /* eslint-disable promise/avoid-new */
   new Promise((resolve, reject) => {
-    Geolocation.getCurrentPosition(position => resolve(position), e => reject(e), {
-      timeout: 8000,
+    Location.getCurrentPositionAsync({
+      accuracy : Location.Accuracy.Lowest,
       maximumAge: 10000,
-    });
+    }).then(position => resolve(position));
   });
 /* eslint-enable promise/avoid-new */
 

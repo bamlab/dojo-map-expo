@@ -1,8 +1,8 @@
 node_modules/**/*
+.idea/*
 .expo/*
 npm-debug.*
 *.jks
 *.p12
 *.key
 *.mobileprovision
-.idea/workspace.xml
