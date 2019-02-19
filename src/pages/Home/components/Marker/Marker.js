@@ -2,7 +2,8 @@
 
 import React, { PureComponent } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Marker as RNMarker } from 'react-native-maps';
+import { MapView } from 'expo';
+const { Marker : RNMarker } = MapView;
 import { Text, Image } from '../../../../components';
 import theme from '../../../../theme';
 

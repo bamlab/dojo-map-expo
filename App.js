@@ -9,12 +9,31 @@
  */
 
 import React, { Component } from 'react';
+import { Font } from 'expo';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import RootNavigation from './src/navigation/index';
 import theme from './src/theme/index';
 
+
 export default class App extends Component {
+  state = {
+    isReady : false
+  };
+  componentDidMount() {
+    // Load fonts
+    Font.loadAsync({
+      'NunitoSans-Bold' : require('./assets/fonts/NunitoSans-Bold.ttf'),
+      'NunitoSans-Regular' : require('./assets/fonts/NunitoSans-Regular.ttf'),
+      'NunitoSans-SemiBold' : require('./assets/fonts/NunitoSans-SemiBold.ttf'),
+      'icomoon' : require('./assets/icons/icomoon.ttf')
+    }).then(() => {
+      this.setState({
+        isReady : true
+      })
+    })
+  }
   render() {
+    if(!this.state.isReady) return null;
     return (
       <PaperProvider theme={paperTheme}>
         <RootNavigation />

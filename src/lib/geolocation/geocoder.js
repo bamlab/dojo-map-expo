@@ -2,22 +2,21 @@
 
 import ToastService from '../../services/ToastService';
 import I18n from '../I18n';
-import geolocationClient from './geolocationClient';
+import { Location } from 'expo';
 
+
+// You can use geocodeAsync in conjonction with reverseGeocodeAsync to get a better address format
 export const findAddressesFromSearch = (address: string): Promise<any> => {
-  return geolocationClient
-    .geocodeAddress(address)
+  return Location.geocodeAsync(address)
     .then(geocoderResults => {
       if (geocoderResults) {
         const results =
           geocoderResults.length &&
-          geocoderResults.filter(
-            ({ countryCode, formattedAddress, position }) => countryCode === 'FR' && formattedAddress && position
-          );
+          geocoderResults.filter(Boolean);
         if (!results || !results.length) throw new Error('ZERO_RESULTS');
-        return results.map(({ formattedAddress, position }) => ({
-          address: formattedAddress,
-          location: { latitude: position.lat, longitude: position.lng },
+        return results.map(({ latitude, longitude }) => ({
+          address: `${latitude}/${longitude}`,
+          location: { latitude, longitude },
         }));
       } else {
         throw new Error(`Error while geocoding ${address}. Query result was ` + JSON.stringify(geocoderResults));
