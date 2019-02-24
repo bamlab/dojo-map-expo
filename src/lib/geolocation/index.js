@@ -6,7 +6,7 @@ export { findAddressesFromSearch } from './geocoder';
 export { positionToRegion } from './positionToRegion';
 
 const checkLocationPermissionAndAskIfPossible = () => {
-  return getLocationPermissionStatus().then(({status}) => {
+  return getLocationPermissionStatus().then(({ status }) => {
     switch (status) {
       case 'granted':
         return true;
@@ -26,7 +26,9 @@ export const getLocationPermissionStatus = () => Permissions.askAsync(Permission
 
 const checkLocationIsAllowed = () => {
   return checkLocationPermissionAndAskIfPossible().then(allowed => {
-    return allowed ? Location.hasServicesEnabledAsync().then(enabled => enabled ? Promise.resolve() : Promise.reject()) : Promise.reject(); // eslint-disable-line prefer-promise-reject-errors
+    return allowed
+      ? Location.hasServicesEnabledAsync().then(enabled => (enabled ? Promise.resolve() : Promise.reject()))
+      : Promise.reject(); // eslint-disable-line prefer-promise-reject-errors
   });
 };
 
@@ -38,7 +40,7 @@ export const getUserLocation = () =>
   /* eslint-disable promise/avoid-new */
   new Promise((resolve, reject) => {
     Location.getCurrentPositionAsync({
-      accuracy : Location.Accuracy.Lowest,
+      accuracy: Location.Accuracy.Lowest,
       maximumAge: 10000,
     }).then(position => resolve(position));
   });
@@ -46,7 +48,7 @@ export const getUserLocation = () =>
 
 export const getUserLocationCoordsIfAllowed = async (): Promise<?{ latitude: number, longitude: number }> => {
   try {
-    const { status : geolocationPermissionStatus } = await getLocationPermissionStatus();
+    const { status: geolocationPermissionStatus } = await getLocationPermissionStatus();
     if (geolocationPermissionStatus === 'granted') {
       const location = await getUserLocation();
       return location.coords;

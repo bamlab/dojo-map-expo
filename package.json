@@ -22,7 +22,11 @@
     "supercluster": "^4.0.1"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0"
+    "babel-preset-expo": "^5.0.0",
+    "eslint": "^5.13.0",
+    "eslint-config-bambi": "^1.4.0",
+    "flow-bin": "^0.92.1",
+    "prettier": "^1.16.4"
   },
   "private": true
 }

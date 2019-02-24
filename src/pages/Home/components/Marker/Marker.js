@@ -1,10 +1,10 @@
 // @flow
 
 import React, { PureComponent } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { MapView } from 'expo';
-const { Marker : RNMarker } = MapView;
-import { Text, Image } from '../../../../components';
+const { Marker: RNMarker } = MapView;
+import { Text } from '../../../../components';
 import theme from '../../../../theme';
 
 type PropsType = {

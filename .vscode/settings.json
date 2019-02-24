@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "javascript.validate.enable": false,
+  "flow.enabled": true,
+  "flow.useNPMPackagedFlow": true,
+  "flow.runOnEdit": true,
+  "react-native.ios.runArguments.simulator": ["--simulator", "iPhone SE"]
+}
