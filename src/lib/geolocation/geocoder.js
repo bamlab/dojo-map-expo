@@ -12,14 +12,9 @@ const convertGeocodeResultToAddress = ({
   city: string,
   name: string,
   country: string,
-}): string => (name && city && country ? `${name}, ${city}, ${country}` : null);
+}): ?string => (name && city && country ? `${name}, ${city}, ${country}` : null);
 
-export const findAddressesFromSearch = async (
-  address: string
-): {
-  address: string,
-  location: { latitude: number, longitude: number },
-}[] => {
+export const findAddressesFromSearch = async (address: string): any => {
   try {
     const geocoderResults = await Location.geocodeAsync(address);
     if (geocoderResults && geocoderResults.length) {

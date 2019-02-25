@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 import Toast from './ToastService';
 import I18n from '../lib/I18n';
 
-type DefaultHandlerType = (error: ?APIErrorsType) => ?string;
+type DefaultHandlerType = (error: any) => ?string;
 type NativeEventType = { description?: string, domain?: string };
 
 export default class HandleErrorService {
@@ -29,7 +29,7 @@ export default class HandleErrorService {
     return HandleErrorService.isNoNetworkError(error) || HandleErrorService.isNoBackConnectionError(error);
   }
 
-  static sendDefault(error: ?APIErrorsType, defaultHandler: ?(error: ?APIErrorsType) => ?string) {
+  static sendDefault(error: any, defaultHandler: ?(error: any) => ?string) {
     const defaultMessage = I18n.t('Error.default');
     if (!defaultHandler) {
       return defaultMessage;
@@ -37,7 +37,7 @@ export default class HandleErrorService {
     return defaultHandler(error) || defaultMessage;
   }
 
-  static getErrorMessage(error: ?APIErrorsType, defaultHandler: ?DefaultHandlerType) {
+  static getErrorMessage(error: any, defaultHandler: ?DefaultHandlerType) {
     const translateError = text => I18n.t(`Error.${text}`);
 
     if (!error) {
@@ -56,7 +56,7 @@ export default class HandleErrorService {
     return HandleErrorService.sendDefault(error, defaultHandler);
   }
 
-  static showToastErrorBounced(error: ?APIErrorsType, defaultHandler: ?DefaultHandlerType) {
+  static showToastErrorBounced(error: any, defaultHandler: ?DefaultHandlerType) {
     Toast.showError(HandleErrorService.getErrorMessage(error, defaultHandler));
   }
 

@@ -27,6 +27,7 @@ type PropsType = {
   storyObjects: StoryObjectType[],
   setRef: Function,
   onStoryMarkerPress: Function,
+  isFocused: boolean,
 };
 
 type StateType = {

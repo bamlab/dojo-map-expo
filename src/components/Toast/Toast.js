@@ -8,7 +8,7 @@ import Text from '../Text';
 
 type PropsType = {
   message: string,
-  error: boolean,
+  error: ?boolean,
   colors?: { backgroundColor?: string, textColor?: string },
   onPress?: Function,
 };

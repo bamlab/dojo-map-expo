@@ -45,7 +45,9 @@ const RootNavigator = createStackNavigator(
   }
 );
 
-export default class RootNavigation extends Component {
+type PropsType = {};
+
+export default class RootNavigation extends Component<PropsType> {
   render() {
     return <RootNavigator />;
   }

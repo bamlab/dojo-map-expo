@@ -40,7 +40,9 @@ class ChooseAddress extends PureComponent<PropsType, StateType> {
     this.setState({ isLoading: true }, async () => {
       try {
         const addressObjects = await findAddressesFromSearch(searchText);
-        this.setState({ addressObjects });
+        if (addressObjects) {
+          this.setState({ addressObjects });
+        }
       } catch (e) {
         console.warn(e);
       }

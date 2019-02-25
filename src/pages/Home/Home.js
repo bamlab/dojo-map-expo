@@ -21,6 +21,7 @@ type StateType = {
 class Home extends PureComponent<PropsType, StateType> {
   map: any = null;
   hasInitializedToInitialLocation: boolean = false;
+  unsubscribeStoriesCollectionUpdate: any;
 
   state = {
     selectedStoryObject: null,
@@ -40,7 +41,6 @@ class Home extends PureComponent<PropsType, StateType> {
         }
       }
     });
-
     this.unsubscribeStoriesCollectionUpdate = database.collection('stories').onSnapshot(this.onStoriesCollectionUpdate);
   }
 
@@ -85,8 +85,6 @@ class Home extends PureComponent<PropsType, StateType> {
       iconName: 'search',
     });
 
-  _onGoToMyLocationPress = () => this._goToUserLocation(true);
-
   _onStoryModalClose = () => this.setState({ selectedStoryObject: null });
 
   _onStoryMarkerPress = (selectedStoryObject: StoryObjectType) => this.setState({ selectedStoryObject });
@@ -102,7 +100,7 @@ class Home extends PureComponent<PropsType, StateType> {
         />
         <MapButton
           style={styles.goToMyLocationButton}
-          onPress={this._onGoToMyLocationPress}
+          onPress={this._goToUserLocation}
           iconColor={theme.colors.lightGrey}
           iconName="my-location"
         />

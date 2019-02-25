@@ -27,6 +27,9 @@ node_modules/react-native/flow/
 node_modules/react-native/flow-github/
 src/flow/
 
+[untyped]
+<PROJECT_ROOT>/node_modules/.*
+
 [options]
 emoji=true
 
@@ -68,4 +71,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
 [version]
-^0.86.0
+0.92.1

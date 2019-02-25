@@ -69,6 +69,11 @@ export const convertToStoryObject = ({ properties: { id, nickname, story }, geom
   },
 });
 
-export const getZoomFromRegion = (region): number => Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2);
+export const getZoomFromRegion = (region: {
+  longitude: number,
+  latitude: number,
+  longitudeDelta: number,
+  latitudeDelta: number,
+}): number => Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2);
 
 export const deltaCoordFromZoom = (zoom: number) => 360 * Math.exp(-zoom * Math.LN2);

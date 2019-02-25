@@ -38,6 +38,7 @@ export const checkPermissionAndGetCurrentLocation = () => {
 
 export const getUserLocation = () =>
   /* eslint-disable promise/avoid-new */
+  //$FlowFixMe
   new Promise((resolve, reject) => {
     Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.Lowest,
