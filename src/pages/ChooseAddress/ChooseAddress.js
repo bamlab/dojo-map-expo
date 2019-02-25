@@ -1,13 +1,12 @@
 // @flow
 
 import React, { PureComponent } from 'react';
-import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { throttle } from 'lodash';
 import { AddressLine } from './components';
 import I18n from '../../lib/I18n';
 import { Text } from '../../components';
-import { findAddressesFromSearch } from '../../lib/geolocation';
 import theme from '../../theme';
 
 type PropsType = {} & NavigationScreenProps;
@@ -23,6 +22,14 @@ type StateType = {
 
 const SEARCH_TEXT_LENGTH_THRESHOLD = 3;
 
+const addressObject = {
+  address: 'Paris',
+  location: {
+    latitude: 0.1,
+    longitude: 0.2,
+  },
+};
+
 class ChooseAddress extends PureComponent<PropsType, StateType> {
   state = {
     addressObjects: [],
@@ -36,19 +43,7 @@ class ChooseAddress extends PureComponent<PropsType, StateType> {
     });
   }
 
-  _findAddressesFromSearch = (searchText: string) => {
-    this.setState({ isLoading: true }, async () => {
-      try {
-        const addressObjects = await findAddressesFromSearch(searchText);
-        if (addressObjects) {
-          this.setState({ addressObjects });
-        }
-      } catch (e) {
-        console.warn(e);
-      }
-      this.setState({ isLoading: false });
-    });
-  };
+  _findAddressesFromSearch = (searchText: string) => null;
 
   _throttleFindAddressesFromSearch = throttle(this._findAddressesFromSearch, 500);
 
@@ -58,25 +53,6 @@ class ChooseAddress extends PureComponent<PropsType, StateType> {
       this._throttleFindAddressesFromSearch(searchText);
     }
   };
-
-  _keyExtractor = (item: { address: string, location: { latitude: number, longitude: number } }): string =>
-    item.address;
-
-  _renderAddressLine = ({
-    item: addressObject,
-    index,
-  }: {
-    item: {
-      address: string,
-      location: { latitude: number, longitude: number },
-    },
-    index: number,
-  }): any => <AddressLine addressObject={addressObject} style={styles.addressLine} />;
-
-  _renderEmptyAddressesList = () =>
-    this.state.searchText.length >= SEARCH_TEXT_LENGTH_THRESHOLD ? (
-      <Text style={styles.noResult}>{I18n.t('ChooseAddress.no_result_found')}</Text>
-    ) : null;
 
   render() {
     const { isLoading, addressObjects, searchText } = this.state;
@@ -92,16 +68,7 @@ class ChooseAddress extends PureComponent<PropsType, StateType> {
             <ActivityIndicator />
           </View>
         ) : (
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={addressObjects && addressObjects.length ? addressObjects.slice(0, 4) : []}
-            renderItem={this._renderAddressLine}
-            keyExtractor={this._keyExtractor}
-            contentContainerStyle={
-              !addressObjects || !addressObjects.length ? styles.emptyContentContainer : styles.addressesListContainer
-            }
-            ListEmptyComponent={this._renderEmptyAddressesList}
-          />
+          <AddressLine addressObject={addressObject} style={styles.addressLine} />
         )}
       </View>
     );
@@ -123,11 +90,6 @@ const styles = StyleSheet.create({
     color: theme.colors.lightGrey,
     textAlign: 'center',
   },
-  emptyContentContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
   loaderContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -136,13 +98,6 @@ const styles = StyleSheet.create({
   noResult: {
     ...theme.typo.title,
     color: theme.colors.deepGrey,
-  },
-  addressesListContainer: {
-    paddingTop: 3 * theme.margin,
-    marginHorizontal: 2 * theme.margin,
-  },
-  addressLine: {
-    marginBottom: 2 * theme.margin,
   },
 });
 

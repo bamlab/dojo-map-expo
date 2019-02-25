@@ -3,7 +3,7 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, InteractionManager } from 'react-native';
 import { NavigationScreenProps, withNavigationFocus } from 'react-navigation';
-import { MapButton, MapView, StoryModal } from './components';
+import { MapButton, MapView } from './components';
 import theme from '../../theme';
 import database from '../../lib/database';
 import I18n from '../../lib/I18n';
@@ -18,6 +18,18 @@ type StateType = {
   stories: StoryObjectType[],
 };
 
+const storyObjects = [
+  {
+    id: '1',
+    nickname: 'Gaspard',
+    story: 'Coucou !',
+    location: {
+      latitude: 48.866667,
+      longitude: 2.333333,
+    },
+  },
+];
+
 class Home extends PureComponent<PropsType, StateType> {
   map: any = null;
   hasInitializedToInitialLocation: boolean = false;
@@ -25,20 +37,13 @@ class Home extends PureComponent<PropsType, StateType> {
 
   state = {
     selectedStoryObject: null,
-    stories: [],
+    stories: storyObjects,
   };
 
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       if (!this.hasInitializedToInitialLocation && this.props.isFocused) {
-        const initialLocation = this.props.navigation.getParam('initialLocation');
-        if (initialLocation) {
-          this.map && this.map.animateToRegion(positionToRegion({ coords: initialLocation }));
-          this.hasInitializedToInitialLocation = true;
-          this.props.navigation.setParams({ initialLocation: null });
-        } else {
-          this._goToUserLocation();
-        }
+        this._goToUserLocation();
       }
     });
     this.unsubscribeStoriesCollectionUpdate = database.collection('stories').onSnapshot(this.onStoriesCollectionUpdate);
@@ -49,18 +54,9 @@ class Home extends PureComponent<PropsType, StateType> {
   }
 
   onStoriesCollectionUpdate = querySnapshot => {
-    const stories = [];
     querySnapshot.forEach(doc => {
-      const { nickname, story, location } = doc.data();
-      stories.push({
-        id: doc.id,
-        nickname,
-        story,
-        location,
-      });
-    });
-    this.setState({
-      stories,
+      //const { nickname, story, location } = doc.data();
+      //TODO
     });
   };
 
@@ -96,7 +92,7 @@ class Home extends PureComponent<PropsType, StateType> {
           setRef={ref => (this.map = ref)}
           style={styles.map}
           storyObjects={this.state.stories}
-          onStoryMarkerPress={this._onStoryMarkerPress}
+          onStoryMarkerPress={() => null}
         />
         <MapButton
           style={styles.goToMyLocationButton}
@@ -110,13 +106,6 @@ class Home extends PureComponent<PropsType, StateType> {
           iconColor={theme.colors.white}
           iconName="plus"
         />
-        {!!this.state.selectedStoryObject && (
-          <StoryModal
-            visible={!!this.state.selectedStoryObject}
-            storyObject={this.state.selectedStoryObject}
-            onClose={this._onStoryModalClose}
-          />
-        )}
       </View>
     );
   }

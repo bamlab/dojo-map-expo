@@ -2,7 +2,6 @@
 
 import { Permissions, Location } from 'expo';
 
-export { findAddressesFromSearch } from './geocoder';
 export { positionToRegion } from './positionToRegion';
 
 const checkLocationPermissionAndAskIfPossible = () => {
