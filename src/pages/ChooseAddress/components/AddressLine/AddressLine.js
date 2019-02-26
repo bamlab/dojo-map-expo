@@ -3,7 +3,6 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationScreenProps, withNavigation } from 'react-navigation';
-import theme from '../../../../theme';
 import { TouchableOpacity, Text } from '../../../../components';
 import I18n from '../../../../lib/I18n';
 
@@ -35,10 +34,7 @@ class AddressLine extends PureComponent<PropsType> {
 }
 
 const styles = StyleSheet.create({
-  address: {
-    ...theme.typo.title,
-    color: theme.colors.blueberry,
-  },
+  address: {},
 });
 
 export default withNavigation(AddressLine);

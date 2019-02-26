@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { StackActions, NavigationActions, NavigationScreenProps } from 'react-navigation';
 import { TextInput } from '../../components';
-import database from '../../lib/database';
 import I18n from '../../lib/I18n';
 import theme from '../../theme';
 
@@ -44,20 +43,11 @@ class WriteStory extends PureComponent<PropsType, StateType> {
   _onChangeStory = (story: string) => this.setState({ story }, this._updateNavParams);
 
   _submitStory = (nickname: string, story: string) => {
-    const initialLocation = this.props.navigation.getParam('location');
-    database.collection('stories').add({
-      nickname: this.state.nickname,
-      story: this.state.story,
-      location: this.props.navigation.getParam('location'),
-    });
     const resetAction = StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({
           routeName: 'Home',
-          params: {
-            initialLocation,
-          },
         }),
       ],
     });

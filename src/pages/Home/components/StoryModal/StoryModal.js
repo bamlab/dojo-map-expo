@@ -1,19 +1,8 @@
 // @flow
 
 import React, { PureComponent } from 'react';
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  Modal,
-  TouchableWithoutFeedback,
-  ScrollView,
-  StatusBar,
-  Platform,
-} from 'react-native';
+import { StyleSheet, View, Dimensions, Modal, TouchableWithoutFeedback, StatusBar, Platform } from 'react-native';
 import theme from '../../../../theme';
-import { TouchableOpacity, Icon, Text } from '../../../../components';
-import { Nickname } from './components';
 
 type PropsType = {
   onClose: Function,
@@ -24,21 +13,13 @@ type PropsType = {
 
 export default class StoryModal extends PureComponent<PropsType> {
   render() {
-    const { onClose, visible, style, storyObject } = this.props;
+    const { onClose, visible, style } = this.props;
     return (
       <Modal animationType="fade" transparent visible={visible} onRequestClose={onClose}>
         <TouchableWithoutFeedback onPress={onClose}>
           <View style={styles.modalBackground} />
         </TouchableWithoutFeedback>
-        <View style={[styles.container, style]}>
-          <Nickname nickname={storyObject.nickname} style={styles.nickname} />
-          <ScrollView style={styles.storyContainer} showsVerticalScrollIndicator={false}>
-            <Text style={styles.story}>{storyObject.story}</Text>
-          </ScrollView>
-          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-            <Icon name="cross" color={theme.colors.white} size={12} />
-          </TouchableOpacity>
-        </View>
+        <View style={[styles.container, style]} />
       </Modal>
     );
   }

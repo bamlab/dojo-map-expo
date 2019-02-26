@@ -18,6 +18,27 @@ type StateType = {
   stories: StoryObjectType[],
 };
 
+const stories = [
+  {
+    id: '1',
+    nickname: 'Gaspard',
+    story: 'Hey !',
+    location: {
+      latitude: 48.866667,
+      longitude: 2.333333,
+    },
+  },
+  {
+    id: '2',
+    nickname: 'Maxime',
+    story: 'Hello !',
+    location: {
+      latitude: 48.8827042,
+      longitude: 2.3224131,
+    },
+  },
+];
+
 class Home extends PureComponent<PropsType, StateType> {
   map: any = null;
   hasInitializedToInitialLocation: boolean = false;
@@ -31,14 +52,7 @@ class Home extends PureComponent<PropsType, StateType> {
   componentDidMount() {
     InteractionManager.runAfterInteractions(() => {
       if (!this.hasInitializedToInitialLocation && this.props.isFocused) {
-        const initialLocation = this.props.navigation.getParam('initialLocation');
-        if (initialLocation) {
-          this.map && this.map.animateToRegion(positionToRegion({ coords: initialLocation }));
-          this.hasInitializedToInitialLocation = true;
-          this.props.navigation.setParams({ initialLocation: null });
-        } else {
-          this._goToUserLocation();
-        }
+        this._goToUserLocation();
       }
     });
     this.unsubscribeStoriesCollectionUpdate = database.collection('stories').onSnapshot(this.onStoriesCollectionUpdate);
@@ -49,18 +63,8 @@ class Home extends PureComponent<PropsType, StateType> {
   }
 
   onStoriesCollectionUpdate = querySnapshot => {
-    const stories = [];
     querySnapshot.forEach(doc => {
-      const { nickname, story, location } = doc.data();
-      stories.push({
-        id: doc.id,
-        nickname,
-        story,
-        location,
-      });
-    });
-    this.setState({
-      stories,
+      //const { nickname, story, location } = doc.data();
     });
   };
 
@@ -95,7 +99,7 @@ class Home extends PureComponent<PropsType, StateType> {
         <MapView
           setRef={ref => (this.map = ref)}
           style={styles.map}
-          storyObjects={this.state.stories}
+          storyObjects={stories}
           onStoryMarkerPress={this._onStoryMarkerPress}
         />
         <MapButton
