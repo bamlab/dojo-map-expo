@@ -63,9 +63,7 @@ class Home extends PureComponent<PropsType, StateType> {
   }
 
   onStoriesCollectionUpdate = querySnapshot => {
-    querySnapshot.forEach(doc => {
-      //const { nickname, story, location } = doc.data();
-    });
+    querySnapshot.forEach(doc => {});
   };
 
   _goToUserLocation = (): Promise<void> =>
