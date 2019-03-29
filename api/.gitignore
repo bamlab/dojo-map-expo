@@ -1,0 +1,11 @@
+node_modules
+dist
+yarn-error.log
+.DS_STORE
+.idea
+deploy_key
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

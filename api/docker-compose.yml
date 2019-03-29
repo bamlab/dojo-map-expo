@@ -1,0 +1,13 @@
+version: '3'
+services:
+  database:
+    build: "./docker"
+    image: "myproject-database"
+    container_name: "myproject-database"
+    ports:
+      - "5432:5432"
+    environment:
+      TZ: "Europe/Paris"
+      POSTGRES_USER: "docker"
+      POSTGRES_PASSWORD: "docker"
+      POSTGRES_DB: "myproject"

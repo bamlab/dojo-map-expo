@@ -1,0 +1,19 @@
+[ignore]
+<PROJECT_ROOT>/config/.*
+<PROJECT_ROOT>/dist/**/*
+
+[untyped]
+
+[include]
+
+[libs]
+src/flow
+
+[lints]
+
+[options]
+module.name_mapper.extension='graphql' -> '<PROJECT_ROOT>/utils/flow/graphqlStub'
+esproposal.decorators=ignore
+
+[version]
+^0.79.1

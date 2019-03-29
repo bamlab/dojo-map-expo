@@ -1,0 +1,44 @@
+diff --git a/node_modules/typeorm/commands/MigrationCreateCommand.js b/node_modules/typeorm/commands/MigrationCreateCommand.js
+index a837056..d44beaf 100644
+--- a/node_modules/typeorm/commands/MigrationCreateCommand.js
++++ b/node_modules/typeorm/commands/MigrationCreateCommand.js
+@@ -84,7 +84,7 @@ var MigrationCreateCommand = /** @class */ (function () {
+                         _a.trys.push([1, 7, , 8]);
+                         timestamp = new Date().getTime();
+                         fileContent = MigrationCreateCommand.getTemplate(args.name, timestamp);
+-                        filename = timestamp + "-" + args.name + ".ts";
++                        filename = timestamp + "-" + args.name + ".js";
+                         directory = args.dir;
+                         if (!!directory) return [3 /*break*/, 5];
+                         _a.label = 2;
+@@ -124,7 +124,7 @@ var MigrationCreateCommand = /** @class */ (function () {
+      * Gets contents of the migration file.
+      */
+     MigrationCreateCommand.getTemplate = function (name, timestamp) {
+-        return "import {MigrationInterface, QueryRunner} from \"typeorm\";\n\nexport class " + StringUtils_1.camelCase(name, true) + timestamp + " implements MigrationInterface {\n\n    public async up(queryRunner: QueryRunner): Promise<any> {\n    }\n\n    public async down(queryRunner: QueryRunner): Promise<any> {\n    }\n\n}\n";
++        return "import { MigrationInterface, QueryRunner } from 'typeorm';\n\nexport class " + StringUtils_1.camelCase(name, true) + timestamp + " implements MigrationInterface {\n\n    async up(queryRunner: QueryRunner): Promise<any> {\n    }\n\n    async down(queryRunner: QueryRunner): Promise<any> {\n    }\n\n}\n";
+     };
+     return MigrationCreateCommand;
+ }());
+diff --git a/node_modules/typeorm/commands/MigrationGenerateCommand.js b/node_modules/typeorm/commands/MigrationGenerateCommand.js
+index 5d4655d..fec09c4 100644
+--- a/node_modules/typeorm/commands/MigrationGenerateCommand.js
++++ b/node_modules/typeorm/commands/MigrationGenerateCommand.js
+@@ -82,7 +82,7 @@ var MigrationGenerateCommand = /** @class */ (function () {
+                             console.log("'migrations:generate' is deprecated, please use 'migration:generate' instead");
+                         }
+                         timestamp = new Date().getTime();
+-                        filename = timestamp + "-" + args.name + ".ts";
++                        filename = timestamp + "-" + args.name + ".js";
+                         directory = args.dir;
+                         if (!!directory) return [3 /*break*/, 4];
+                         _a.label = 1;
+@@ -181,7 +181,7 @@ var MigrationGenerateCommand = /** @class */ (function () {
+      * Gets contents of the migration file.
+      */
+     MigrationGenerateCommand.getTemplate = function (name, timestamp, upSqls, downSqls) {
+-        return "import {MigrationInterface, QueryRunner} from \"typeorm\";\n\nexport class " + StringUtils_1.camelCase(name, true) + timestamp + " implements MigrationInterface {\n\n    public async up(queryRunner: QueryRunner): Promise<any> {\n" + upSqls.join("\n") + "\n    }\n\n    public async down(queryRunner: QueryRunner): Promise<any> {\n" + downSqls.join("\n") + "\n    }\n\n}\n";
++        return "import { MigrationInterface, QueryRunner } from 'typeorm';\n\nexport class " + StringUtils_1.camelCase(name, true) + timestamp + " implements MigrationInterface {\n\n    async up(queryRunner: QueryRunner): Promise<any> {\n" + upSqls.join("\n") + "\n    }\n\n    async down(queryRunner: QueryRunner): Promise<any> {\n" + downSqls.join("\n") + "\n    }\n\n}\n";
+     };
+     return MigrationGenerateCommand;
+ }());

@@ -1,0 +1,17 @@
+listen_port: LISTEN_PORT
+
+database:
+  host: DATABASE_HOSTNAME
+  port: DATABASE_PORT
+  database: DATABASE_NAME
+  username: DATABASE_USERNAME
+  password: DATABASE_PASSWORD
+
+apollo:
+  introspection:
+    __name: 'APOLLO_INTROSPECTION'
+    __format: 'json'
+  playground:
+    __name: 'APOLLO_PLAYGROUND'
+    __format: 'json'
+  engine_api_key: APOLLO_ENGINE_API_KEY

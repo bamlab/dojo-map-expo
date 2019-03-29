@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+- 10
+addons:
+  postgresql: "10"
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
+install: yarn --frozen-lockfile
+before_script:
+- sudo -u postgres createdb myproject
+- sudo -u postgres psql myproject -c "create user docker with password 'docker'"
+- sudo -u postgres psql myproject -c 'grant all privileges on database "myproject" to docker'
+- sudo -u postgres psql myproject -c 'create extension if not exists "unaccent"'
+- sudo -u postgres psql myproject -c 'create extension if not exists "uuid-ossp"'
+script: yarn test
+cache:
+  yarn: true
+  directories:
+  - node_modules
+env:
+  matrix:
+  - CI=true TZ=Europe/Paris
+  global:
+  - PGPORT=5433
+  - DATABASE_PORT=5433
+notifications:
+  email: false

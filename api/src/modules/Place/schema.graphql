@@ -1,0 +1,9 @@
+extend type Query {
+  allPlaces: [Place]
+}
+
+type Place {
+  id: ID!
+  name: String!
+  category: PlaceCategory
+}

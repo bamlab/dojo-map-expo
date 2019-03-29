@@ -1,0 +1,10 @@
+#import "../modules/Place/schema.graphql"
+#import "../modules/PlaceCategory/schema.graphql"
+
+type Schema {
+  query: Query
+}
+
+scalar DateTime
+
+type Query

@@ -1,0 +1,13 @@
+listen_port: 3000
+
+database:
+  host: localhost
+  port: 5432
+  database: myproject
+  username: docker
+  password: docker
+
+apollo:
+  playground: false
+  introspection: false
+  engine_api_key: false
