@@ -1,6 +1,6 @@
 extend type Query {
   allPlaces: [Place]
-  searchPlaces(query: String!): [Place]
+  searchPlaces(query: String!, aroundLocation: AroundLocationInput): [Place]
 }
 
 type Place {
@@ -10,4 +10,9 @@ type Place {
   latitude: Float
   longitude: Float
   category: PlaceCategory
+}
+
+input AroundLocationInput {
+  latitude: Float
+  longitude: Float
 }
