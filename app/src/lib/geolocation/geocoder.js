@@ -1,5 +1,6 @@
 // @flow
 
+import { request } from 'graphql-request';
 import ToastService from '../../services/ToastService';
 import I18n from '../I18n';
 
@@ -19,17 +20,19 @@ const convertResultsToAddress = ({
 
 export const findAddressesFromSearch = async (search: string): any => {
   try {
-    const { allPlaces: places } = {
-      allPlaces: [
+    const { allPlaces: places } = await request(
+      'http://localhost:3000/graphql',
+      `
         {
-          id: 'toto',
-          name: 'BAM',
-          address: '48 boulevard des Batignolles, 75017, Paris',
-          latitude: 48.88269,
-          longitude: 2.30483,
-        },
-      ],
-    };
+          allPlaces {
+            id
+            name
+            address
+            latitude
+            longitude
+          }
+        }
+      `);
 
     const addresses = places.map(convertResultsToAddress).filter(Boolean);
 
