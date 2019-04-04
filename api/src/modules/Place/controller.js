@@ -9,7 +9,7 @@ export class PlaceController {
 
   static async search(query: string, ctx: ContextType): Promise<PlaceType[]> {
     return Place.find({
-      where: `Place.name ILIKE ('%${query}%')`,
+      where: `"Place".searchable @@ to_tsquery('french', '${query}')`,
       take: 10,
     });
   }
