@@ -1,5 +1,6 @@
 // @flow
 
+import { Like } from 'typeorm';
 import { Place } from './entity';
 
 export class PlaceController {
@@ -8,6 +9,9 @@ export class PlaceController {
   }
 
   static async search(query: string, ctx: ContextType): Promise<PlaceType[]> {
-    return Place.find({ take: 10 });
+    return Place.find({
+      where: { name: Like(`%${query}%`) },
+      take: 10,
+    });
   }
 }
