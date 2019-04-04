@@ -16,9 +16,6 @@ const createPlaceCategories = async () => {
     {
       name: 'Bar',
     },
-    {
-      name: 'Bar',
-    },
   ];
 
   for (const placeCategory of placeCategories) {
