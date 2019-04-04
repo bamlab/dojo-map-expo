@@ -20,11 +20,11 @@ const convertResultsToAddress = ({
 
 export const findAddressesFromSearch = async (search: string): any => {
   try {
-    const { allPlaces: places } = await request(
+    const { searchPlaces: places } = await request(
       'http://localhost:3000/graphql',
       `
         {
-          allPlaces {
+          searchPlaces(query: "${search}") {
             id
             name
             address
