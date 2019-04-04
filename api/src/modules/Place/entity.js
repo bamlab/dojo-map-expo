@@ -14,6 +14,9 @@ export class Place extends BaseEntity {
 
   set = (place: PlaceInputType) => {
     this.name = place.name;
+    this.address = place.address;
+    this.latitude = place.latitude;
+    this.longitude = place.longitude;
     this.category = place.category && place.category.id ? place.category : null;
   };
 
@@ -22,6 +25,15 @@ export class Place extends BaseEntity {
 
   @Column('varchar')
   name: string;
+
+  @Column('varchar')
+  address: string;
+
+  @Column('numeric')
+  latitude: number;
+
+  @Column('numeric')
+  longitude: number;
 
   @ManyToOne(type => PlaceCategory, placeCategory => placeCategory.places, { onDelete: 'SET NULL' })
   category: ?PlaceCategoryType;

@@ -5,5 +5,8 @@ extend type Query {
 type Place {
   id: ID!
   name: String!
+  address: String!
+  latitude: Float
+  longitude: Float
   category: PlaceCategory
 }
