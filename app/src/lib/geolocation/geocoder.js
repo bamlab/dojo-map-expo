@@ -1,45 +1,43 @@
 // @flow
 
-import { Location } from 'expo';
 import ToastService from '../../services/ToastService';
 import I18n from '../I18n';
 
-const convertGeocodeResultToAddress = ({
-  city,
+const convertResultsToAddress = ({
+  id,
   name,
-  country,
+  address,
+  latitude,
+  longitude,
 }: {
-  city: string,
+  id: string,
   name: string,
-  country: string,
-}): ?string => (name && city && country ? `${name}, ${city}, ${country}` : null);
+  address: string,
+  latitude: number,
+  longitude: number,
+}): ?string => (id && name && address) ? ({ id, address: `${name}, ${address}`, location: { latitude, longitude } }) : null;
 
-export const findAddressesFromSearch = async (address: string): any => {
+export const findAddressesFromSearch = async (search: string): any => {
   try {
-    const geocoderResults = await Location.geocodeAsync(address);
-    if (geocoderResults && geocoderResults.length) {
-      const results = (await Promise.all(
-        geocoderResults.map(async ({ latitude, longitude }) => {
-          try {
-            const reversedGeocode = await Location.reverseGeocodeAsync({ latitude, longitude });
-            if (reversedGeocode && reversedGeocode.length) {
-              return {
-                address: convertGeocodeResultToAddress(reversedGeocode[0]),
-                location: { latitude, longitude },
-              };
-            }
-            return null;
-          } catch (e) {
-            console.warn(e);
-            return null;
-          }
-        })
-      )).filter(Boolean);
-      if (!results || !results.length) throw new Error('ZERO_RESULTS');
-      return results;
-    } else {
-      throw new Error(`Error while geocoding ${address}. Query result was ` + JSON.stringify(geocoderResults));
+    const { allPlaces: places } = {
+      allPlaces: [
+        {
+          id: 'toto',
+          name: 'BAM',
+          address: '48 boulevard des Batignolles, 75017, Paris',
+          latitude: 48.88269,
+          longitude: 2.30483,
+        },
+      ],
+    };
+
+    const addresses = places.map(convertResultsToAddress).filter(Boolean);
+
+    if (!addresses.length) {
+      throw new Error('ZERO_RESULTS');
     }
+
+    return addresses;
   } catch (error) {
     if (!error.message.includes('ZERO_RESULTS')) {
       console.warn(error);

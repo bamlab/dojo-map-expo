@@ -14,6 +14,7 @@ type PropsType = {} & NavigationScreenProps;
 
 type StateType = {
   addressObjects: {
+    id: string,
     address: string,
     location: { latitude: number, longitude: number },
   }[],
@@ -63,15 +64,16 @@ class ChooseAddress extends PureComponent<PropsType, StateType> {
     item.address;
 
   _renderAddressLine = ({
-    item: addressObject,
+    item: { address, location, id },
     index,
   }: {
     item: {
+      id: string,
       address: string,
       location: { latitude: number, longitude: number },
     },
     index: number,
-  }): any => <AddressLine addressObject={addressObject} style={styles.addressLine} />;
+  }): any => <AddressLine key={id} addressObject={{ address, location }} style={styles.addressLine} />;
 
   _renderEmptyAddressesList = () =>
     this.state.searchText.length >= SEARCH_TEXT_LENGTH_THRESHOLD ? (
