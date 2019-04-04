@@ -1,5 +1,6 @@
 // @flow
 
+import { Location } from 'expo';
 import { request } from 'graphql-request';
 import ToastService from '../../services/ToastService';
 import I18n from '../I18n';
@@ -20,11 +21,19 @@ const convertResultsToAddress = ({
 
 export const findAddressesFromSearch = async (search: string): any => {
   try {
+    const myLocation = await Location.getCurrentPositionAsync({});
+    const aroundLocation = {
+      latitude: myLocation.coords.latitude,
+      longitude: myLocation.coords.longitude,
+    };
     const { searchPlaces: places } = await request(
       'http://localhost:3000/graphql',
       `
         {
-          searchPlaces(query: "${search}") {
+            searchPlaces(
+              query: "${search}"
+              aroundLocation: { latitude: ${aroundLocation.latitude}, longitude: ${aroundLocation.longitude} }
+            ) {
             id
             name
             address
