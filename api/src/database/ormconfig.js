@@ -9,7 +9,7 @@ module.exports = {
   username: config.get('database.username'),
   password: config.get('database.password'),
   database: config.get('database.database'),
-  synchronize: true,
+  synchronize: false,
   migrationsRun: false,
   logging: process.env.NODE_ENV !== 'test' ? ['error', 'query', 'schema'] : [],
   entities,
