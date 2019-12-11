@@ -1,6 +1,6 @@
 // @flow
 
-import { Localization } from 'expo-localization';
+import * as Localization from 'expo-localization';
 import I18n from 'i18n-js';
 import fr from './fr.json';
 
