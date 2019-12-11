@@ -45,6 +45,7 @@ class MapView extends PureComponent<PropsType, StateType> {
   state = {
     clusters: [],
     region: null,
+    isMapReady: false,
   };
 
   componentDidUpdate(prevProps: any) {
@@ -91,14 +92,14 @@ class MapView extends PureComponent<PropsType, StateType> {
     const storyObject = convertToStoryObject(cluster);
     const showNickname =
       Platform.OS === 'ios' && this.state.region && getZoomFromRegion(this.state.region) >= ZOOM_THRESHOLD_TO_NICKNAME;
-    return (
+    return this.state.isMapReady ? (
       <Marker
         key={storyObject.id}
         storyObject={storyObject}
         onPress={this.props.onStoryMarkerPress}
         showNickname={showNickname}
       />
-    );
+    ) : null;
   };
 
   _onRegionChangeComplete = region => {
@@ -131,6 +132,10 @@ class MapView extends PureComponent<PropsType, StateType> {
 
   _onRegionChangeCompleteThrottle = throttle(this._onRegionChangeComplete, 750);
 
+  onMapLayout = () => {
+    this.setState({ isMapReady: true });
+  };
+
   render() {
     const { style, isFocused, ...rest } = this.props;
     return (
@@ -141,6 +146,7 @@ class MapView extends PureComponent<PropsType, StateType> {
         showsUserLocation={isFocused}
         onRegionChangeComplete={this._onRegionChangeCompleteThrottle}
         customMapStyle={googleMapsCustomMapStyle}
+        onLayout={this.onMapLayout}
       >
         {this.state.clusters.map(cluster => this._renderMarker(cluster))}
       </RNMapView>
