@@ -1,7 +1,7 @@
 // @flow
 
-import { Permissions, Location } from 'expo';
-
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 export { findAddressesFromSearch } from './geocoder';
 export { positionToRegion } from './positionToRegion';
 

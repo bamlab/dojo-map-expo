@@ -1,6 +1,6 @@
 // @flow
 
-import { Location } from 'expo';
+import * as Location from 'expo-location';
 import ToastService from '../../services/ToastService';
 import I18n from '../I18n';
 

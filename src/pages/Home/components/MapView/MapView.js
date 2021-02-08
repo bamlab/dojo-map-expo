@@ -5,7 +5,7 @@ import { StyleSheet, Platform } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 import { throttle, get } from 'lodash';
 import superCluster from 'supercluster';
-import { MapView as RNMapView } from 'expo';
+import RNMapView from 'react-native-maps';
 import {
   convertToGeoJSON,
   BoundaryBox,
