@@ -1,7 +1,8 @@
 // @flow
 
 import React, { Component } from 'react';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
 import * as Pages from '../pages';
 import { Header } from '../components';
 
@@ -45,10 +46,16 @@ const RootNavigator = createStackNavigator(
   }
 );
 
+const NavigationContainer = createAppContainer(RootNavigator);
+
 type PropsType = {};
 
 export default class RootNavigation extends Component<PropsType> {
   render() {
-    return <RootNavigator />;
+    return (
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    );
   }
 }
