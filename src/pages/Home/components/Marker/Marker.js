@@ -2,10 +2,10 @@
 
 import React, { PureComponent } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-import { MapView } from 'expo';
-const { Marker: RNMarker } = MapView;
+import MapView from 'react-native-maps';
 import { Text } from '../../../../components';
 import theme from '../../../../theme';
+const { Marker: RNMarker } = MapView;
 
 type PropsType = {
   storyObject: StoryObjectType,

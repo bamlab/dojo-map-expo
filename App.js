@@ -6,7 +6,7 @@
  */
 
 import React, { Component } from 'react';
-import { Font } from 'expo';
+import * as Font from 'expo-font';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import RootNavigation from './src/navigation/index';
 import theme from './src/theme/index';
